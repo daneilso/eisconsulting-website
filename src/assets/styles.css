@@ -139,3 +139,83 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:22px 0}
   border:1px solid var(--line);
   background: rgba(255,255,255,.03);
 }
+/* Footer (based on current eisconsulting.co.uk content, styled to match new site) */
+.site-footer{
+  margin-top: 14px;
+  padding: 16px 0 10px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.footer-grid{
+  display: grid;
+  gap: 14px;
+}
+
+@media (min-width: 980px){
+  .footer-grid{
+    grid-template-columns: 1.2fr 1fr 0.8fr;
+    align-items: start;
+  }
+}
+
+.footer-brand{
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.footer-logo{
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+.footer-title{
+  margin: 0 0 6px;
+  color: var(--text);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.footer-links{
+  display: grid;
+  gap: 6px;
+}
+
+.footer-links a{
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.footer-links a:hover{
+  text-decoration: underline;
+}
+
+.smallprint{
+  font-size: 12px;
+  color: rgba(184,198,230,.95);
+}
+
+.footer-bottom{
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-legal{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.footer-legal .sep{
+  opacity: .8;
+}
