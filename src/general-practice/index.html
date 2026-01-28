@@ -1,96 +1,587 @@
 <!doctype html>
 <html lang="en-GB">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>EIS Consulting | AI in General Practice</title>
-    <meta name="description" content="AI compliance and governance pathway for General Practice." />
-    <link rel="stylesheet" href="/assets/styles.css" />
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Governance for General Practice | EIS Consulting</title>
+  <meta name="description" content="Defensible, practical governance for AI use in English general practice. Decide what you can safely use, what to stop, and what evidence you need to justify decisions." />
+  <meta property="og:title" content="AI Governance for General Practice | EIS Consulting" />
+  <meta property="og:description" content="Make defensible decisions about AI use in general practice, without slowing clinicians down." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="" />
 
-  <body>
-    <header class="header">
+  <style>
+    :root{
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-2: #f6f8fb;
+      --text: #0b1220;
+      --muted: #556070;
+      --border: rgba(15, 23, 42, 0.12);
+      --shadow: 0 10px 30px rgba(2, 8, 23, 0.08);
+      --radius: 18px;
+      --radius-sm: 14px;
+
+      /* Brand accents (adjust if needed) */
+      --primary: #2f2b7f;   /* EIS indigo */
+      --accent: #06a7c9;    /* EIS teal */
+      --accent-2: #a8d7ee;  /* light blue */
+
+      --max: 1120px;
+      --pad: 20px;
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(6,167,201,0.18), transparent 55%),
+                  radial-gradient(900px 500px at 90% 0%, rgba(47,43,127,0.14), transparent 55%),
+                  var(--bg);
+      line-height: 1.45;
+    }
+    a{ color: inherit; text-decoration: none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+
+    /* Header */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.75);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      gap: 16px;
+    }
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 220px;
+    }
+    .brand img{
+      width: 132px;
+      height: auto;
+      display: block;
+    }
+    .navlinks{
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .navlinks a{
+      font-size: 14px;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 12px;
+    }
+    .navlinks a:hover{ background: rgba(15,23,42,0.05); color: var(--text); }
+
+    /* Buttons */
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-weight: 650;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow); }
+    .btn-primary{
+      background: linear-gradient(135deg, var(--primary), #1f2a6b);
+      border-color: rgba(47,43,127,0.25);
+      color: #fff;
+    }
+    .btn-primary:hover{ box-shadow: 0 14px 34px rgba(47,43,127,0.22); }
+    .btn-secondary{
+      background: rgba(6,167,201,0.08);
+      border-color: rgba(6,167,201,0.25);
+      color: var(--text);
+    }
+
+    /* Hero */
+    .hero{
+      padding: 44px 0 22px;
+    }
+    .hero-grid{
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      align-items: start;
+    }
+    .kicker{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(6,167,201,0.25);
+      background: rgba(6,167,201,0.08);
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    h1{
+      margin: 0 0 12px 0;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .sub{
+      margin: 0 0 18px 0;
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 66ch;
+    }
+    .cta-row{ display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .callout{
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(246,248,251,0.85));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 14px 40px rgba(2, 8, 23, 0.06);
+    }
+    .callout h3{ margin: 0 0 8px; font-size: 16px; }
+    .callout p{ margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+    .pill{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(15,23,42,0.10);
+      background: rgba(255,255,255,0.7);
+      font-size: 13px;
+      color: var(--muted);
+      margin: 6px 6px 0 0;
+    }
+
+    /* Sections */
+    section{ padding: 22px 0; }
+    .section-head{
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .section-head h2{
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+    }
+    .section-head p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 70ch;
+    }
+
+    /* Card system */
+    .cards{
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card{
+      grid-column: span 4;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 12px 34px rgba(2, 8, 23, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    .card:before{
+      content:"";
+      position:absolute;
+      top:0; left:0; right:0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), rgba(6,167,201,0.0));
+      opacity: 0.95;
+    }
+    .card h3{
+      margin: 0 0 8px;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+    .card p{
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .card ul{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .card ul li{ margin: 7px 0; }
+
+    .card-quote{
+      background: linear-gradient(180deg, rgba(6,167,201,0.06), rgba(255,255,255,0.95));
+    }
+    .quote{
+      font-size: 15px;
+      color: var(--text);
+      margin: 0 0 10px;
+      font-weight: 650;
+    }
+    .attrib{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .card-strong:before{
+      background: linear-gradient(90deg, var(--primary), rgba(47,43,127,0.0));
+    }
+    .card-warn:before{
+      background: linear-gradient(90deg, #b45309, rgba(180,83,9,0.0));
+    }
+
+    .tagrow{ display:flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--muted);
+      background: rgba(15,23,42,0.04);
+      border: 1px solid rgba(15,23,42,0.08);
+    }
+
+    .card-wide{ grid-column: span 6; }
+    .card-full{ grid-column: 1 / -1; }
+
+    /* Footer */
+    footer{
+      padding: 28px 0 40px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footer-grid{
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .brand{ min-width: auto; }
+    }
+    @media (max-width: 780px){
+      .card{ grid-column: 1 / -1; }
+      .card-wide{ grid-column: 1 / -1; }
+      .navlinks{ display:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
       <div class="nav">
-        <div class="brand">
-          <a class="brand-link" href="/" aria-label="EIS Consulting home">
-            <img class="logo" src="/assets/eis-consulting-logo-transx2.png" alt="EIS Consulting logo" />
-          </a>
-          <span class="badge">Adopt AI Safely</span>
+        <a class="brand" href="#">
+          <!-- Replace with your real path or embed as base64 if you prefer single file assets -->
+          <img src="./assets/eis-logo.png" alt="EIS Consulting" />
+        </a>
+
+        <nav class="navlinks" aria-label="Primary navigation">
+          <a href="#">Home</a>
+          <a href="#">Services</a>
+          <a href="#" aria-current="page">General Practice</a>
+          <a href="#">Resources</a>
+          <a href="#">Contact</a>
+        </nav>
+
+        <div style="display:flex; gap:10px; align-items:center;">
+          <a class="btn btn-secondary" href="#readiness">Download readiness check</a>
+          <a class="btn btn-primary" href="#book">Book a 30 minute diagnostic</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <div class="hero">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="kicker">
+              <span aria-hidden="true">●</span>
+              General Practice in England
+            </div>
+
+            <h1>GPs are already using AI. Most practices have not caught up with the governance.</h1>
+
+            <p class="sub">
+              We help practices make defensible, inspection ready decisions about AI use without slowing clinicians down
+              or pretending national guidance is clearer than it really is.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#book">Book a 30 minute AI Compliance Diagnostic</a>
+              <a class="btn btn-secondary" href="#cards">See the governance cards</a>
+            </div>
+          </div>
+
+          <aside class="callout" aria-label="Cornerstone statement">
+            <h3>What we actually do</h3>
+            <p>
+              We do not sell AI tools. We help practices decide what they can safely use, what they should stop using,
+              and what they need in place to justify those decisions.
+            </p>
+            <div>
+              <span class="pill">Defensibility first</span>
+              <span class="pill">Local decisions</span>
+              <span class="pill">Evidence you can show</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD SECTION 1: GP SENTIMENT QUOTES -->
+    <section id="cards">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>What we hear in practices</h2>
+            <p>These are the signals that AI use is already happening and governance is lagging.</p>
+          </div>
         </div>
 
-        <nav class="links" aria-label="Primary navigation">
-          <a href="/">Home</a>
-          <a href="/general-practice/" class="active" aria-current="page">General Practice</a>
-          <a href="/legal/">Legal</a>
-          <a href="/accountancy/">Accountancy</a>
-          <a href="/contact/">Contact</a>
-        </nav>
+        <div class="cards">
+          <article class="card card-quote card-wide">
+            <p class="quote">“We know AI is saving time but no one has told us where the liability sits.”</p>
+            <p class="attrib">Typical GP concern</p>
+            <div class="tagrow">
+              <span class="tag">Liability</span>
+              <span class="tag">Accountability</span>
+              <span class="tag">Defensibility</span>
+            </div>
+          </article>
+
+          <article class="card card-quote card-wide">
+            <p class="quote">“ICBs are giving mixed messages, so practices are left guessing.”</p>
+            <p class="attrib">Typical GP concern</p>
+            <div class="tagrow">
+              <span class="tag">Local variation</span>
+              <span class="tag">Unclear expectations</span>
+              <span class="tag">Audit anxiety</span>
+            </div>
+          </article>
+
+          <article class="card card-quote card-wide">
+            <p class="quote">“I am using tools already, but I do not know how defensible that is.”</p>
+            <p class="attrib">Typical GP concern</p>
+            <div class="tagrow">
+              <span class="tag">Informal use</span>
+              <span class="tag">No evidence trail</span>
+              <span class="tag">Risk exposure</span>
+            </div>
+          </article>
+
+          <article class="card card-quote card-wide">
+            <p class="quote">“I do not want to stop using AI. I want to use it safely.”</p>
+            <p class="attrib">Typical GP concern</p>
+            <div class="tagrow">
+              <span class="tag">Pragmatic adoption</span>
+              <span class="tag">Safety boundaries</span>
+              <span class="tag">Shared standards</span>
+            </div>
+          </article>
+        </div>
       </div>
-    </header>
+    </section>
 
-    <div class="container">
-      <main class="stack">
-        <section class="hero">
-          <div class="kicker">Live offering</div>
-          <h1 class="h1">AI in General Practice</h1>
-          <p class="sub">
-            Adopt AI in your GP practice safely, with practical governance, clinical safety controls and staff training that
-            stands up to CQC scrutiny.
-          </p>
-          <div class="ctas">
-            <a class="btn primary" href="/contact/">Book a 30-minute AI Compliance Diagnostic</a>
-            <a class="btn" href="/">Back to home</a>
-          </div>
-        </section>
-
-        <section class="card">
-          <h3>What’s on this page</h3>
-          <p class="small">When you’re ready, paste: outcomes, deliverables, pricing/tier cards, and FAQs.</p>
-        </section>
-      </main>
-
-      <footer class="site-footer">
-        <div class="footer-grid">
+    <!-- CARD SECTION 2: WHO THIS IS FOR -->
+    <section>
+      <div class="wrap">
+        <div class="section-head">
           <div>
-            <div class="footer-brand">
-              <img class="footer-logo" src="/assets/eis-consulting-logo-transx2.png" alt="EIS Consulting logo" />
-              <div>
-                <p class="footer-title">EIS Consulting Ltd</p>
-                <div class="smallprint">Adopt AI Safely — AI compliance for highly regulated UK businesses.</div>
+            <h2>Who this is really for</h2>
+            <p>Be precise. This works best where AI use already exists and leaders want reassurance.</p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <article class="card card-strong">
+            <h3>Primary fit</h3>
+            <p>Where product market fit exists now.</p>
+            <ul>
+              <li>GP Partners in England</li>
+              <li>Practice Managers in digitally active practices</li>
+              <li>PCN Clinical Directors</li>
+              <li>Practices already using AI scribes, admin copilots, or triage tools</li>
+              <li>Clinicians using AI independently for notes, admin, or learning</li>
+              <li>Teams being pressed to pause, justify, or formalise AI use</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Secondary fit</h3>
+            <p>Emerging, typically slower. Qualify hard to avoid drag.</p>
+            <ul>
+              <li>Practices planning first formal AI adoption</li>
+              <li>PCNs coordinating shared AI tooling</li>
+              <li>ICB digital leads piloting AI with practices</li>
+            </ul>
+          </article>
+
+          <article class="card card-warn">
+            <h3>Not a fit</h3>
+            <p>Actively de qualify. These cycles are long and low yield.</p>
+            <ul>
+              <li>Practices with zero AI use and no intention to pilot</li>
+              <li>Waiting for national guidance before doing anything</li>
+              <li>Looking for cheap AI tools</li>
+              <li>Asking “why do we need this if nothing has gone wrong yet”</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARD SECTION 3: QUALIFICATION + WHAT TO AVOID -->
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Fast qualification and clean messaging</h2>
+            <p>One question to open the door, plus what to stop leading with.</p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <article class="card card-wide card-strong">
+            <h3>Qualification question</h3>
+            <p style="margin-bottom:10px;">
+              Ask this early:
+            </p>
+            <p class="quote" style="margin-top:0;">
+              “Are any clinicians in your practice already using AI, formally or informally, for notes, admin, or learning?”
+            </p>
+            <div class="tagrow">
+              <span class="tag">Yes → strong fit</span>
+              <span class="tag">No but planning to → possible fit</span>
+              <span class="tag">No and not interested → disengage</span>
+            </div>
+          </article>
+
+          <article class="card card-wide">
+            <h3>What to lead with instead</h3>
+            <p>Practical, local, defensible. No hype.</p>
+            <ul>
+              <li>Local decisions and interim governance</li>
+              <li>Inspection ready evidence</li>
+              <li>Reduced cognitive load and time reclaimed</li>
+              <li>Clear boundaries for safe use</li>
+            </ul>
+          </article>
+
+          <article class="card card-full card-warn">
+            <h3>What to de emphasise</h3>
+            <p>
+              If you lead with these, you trigger scepticism and “NHS hype” instincts.
+            </p>
+            <div class="cards" style="gap:12px; margin-top:10px;">
+              <div class="card" style="grid-column: span 4; box-shadow:none; background: var(--surface-2);">
+                <h3 style="margin-bottom:6px;">Productivity gains</h3>
+                <p style="margin:0;">Reframe as time reclaimed and reduced cognitive load.</p>
+              </div>
+              <div class="card" style="grid-column: span 4; box-shadow:none; background: var(--surface-2);">
+                <h3 style="margin-bottom:6px;">AI strategy decks</h3>
+                <p style="margin:0;">Replace with local decisions and evidence you can show.</p>
+              </div>
+              <div class="card" style="grid-column: span 4; box-shadow:none; background: var(--surface-2);">
+                <h3 style="margin-bottom:6px;">Tools and trends</h3>
+                <p style="margin:0;">They already know the tools. They worry about defensibility.</p>
               </div>
             </div>
-          </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-          <div>
-            <p class="footer-title">Contact Information</p>
-            <div class="footer-links">
-              <div>t: <a href="tel:+441609710142">01609 710142</a></div>
-              <div>e: <a href="mailto:contact@eisconsulting.co.uk">contact@eisconsulting.co.uk</a></div>
-              <div class="smallprint">Moat House, Northallerton, North Yorks. DL7 0LY</div>
+    <!-- CTA SECTION -->
+    <section id="book">
+      <div class="wrap">
+        <div class="callout">
+          <div class="section-head" style="margin-bottom:10px;">
+            <div>
+              <h2>Want a defensible position on AI use in your practice?</h2>
+              <p>We will help you decide what is acceptable, what needs controls, and what should stop.</p>
             </div>
           </div>
-
-          <div>
-            <p class="footer-title">Navigation</p>
-            <div class="footer-links">
-              <a href="/">Home</a>
-              <a href="/general-practice/">General Practice</a>
-              <a href="/legal/">Legal</a>
-              <a href="/accountancy/">Accountancy</a>
-              <a href="/contact/">Contact</a>
-            </div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#">Book a 30 minute AI Compliance Diagnostic</a>
+            <a class="btn btn-secondary" href="#readiness">Download the AI Governance Readiness Check</a>
           </div>
+          <p style="margin:12px 0 0; color:var(--muted); font-size:13px;">
+            Note: We support governance and assurance. Clinical responsibility and decision making remain with the practice.
+          </p>
         </div>
+      </div>
+    </section>
 
-        <div class="footer-bottom">
-          <div class="smallprint">© Copyright EIS Consulting Ltd. All Rights Reserved</div>
-          <div class="footer-legal">
-            <a class="smallprint" href="/privacy-policy/">Privacy Policy</a>
-            <span class="smallprint sep">|</span>
-            <a class="smallprint" href="/terms-of-use/">Terms of Use</a>
-          </div>
+    <!-- Placeholder for readiness asset -->
+    <section id="readiness">
+      <div class="wrap">
+        <div class="cards">
+          <article class="card card-full">
+            <h3>AI Governance Readiness Check</h3>
+            <p>
+              Placeholder for your downloadable readiness check or scorecard. Link this button to your PDF or form.
+            </p>
+            <a class="btn btn-secondary" href="#">Download readiness check</a>
+          </article>
         </div>
-      </footer>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <strong style="color:var(--text);">EIS Consulting</strong>
+          <p style="margin:8px 0 0;">
+            Vendor neutral AI governance and compliance support for UK regulated and high trust environments.
+          </p>
+        </div>
+        <div>
+          <p style="margin:0;">
+            This page is informational and not legal advice. Your organisation remains accountable for decisions, records, and patient care.
+          </p>
+        </div>
+      </div>
     </div>
-  </body>
+  </footer>
+</body>
 </html>
