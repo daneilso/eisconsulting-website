@@ -61,7 +61,7 @@ a:hover{opacity:.92}
   text-overflow: ellipsis;
 }
 
-@media (max-width: 980px){
+@media (max-width: 720px){
   .badge{
     max-width: 100%;
     white-space: normal;
