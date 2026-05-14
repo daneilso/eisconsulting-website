@@ -192,4 +192,19 @@ The following items are candidates for brief v1.3 or a subsequent engagement tem
 
 ---
 
+### Post-refinement changes (2026-05-14)
+
+Three further changes applied in a single commit (`refine(home):`) after the four-commit acceptance batch above.
+
+**Change 1 — Hero CTA hrefs: `#waitlist` fragments removed**
+`/healthcare/#waitlist` → `/healthcare/` and `/accountancy/#waitlist` → `/accountancy/` in `src/index.html`. Rationale: auto-scrolling to the form bypassed sector positioning content the visitor needed to read first. The `id="waitlist"` anchors on both stub pages are retained for direct-link use from email, social, or future scorecard outcome pages.
+
+**Change 2 — Law proposition button label updated**
+"Read the proposition first →" → "How we help law firms grow →". Clarity event name `hero_cta_law_proposition` unchanged (internal; semantically correct).
+
+**Change 3 — Hero sector buttons full-width**
+New scoped CSS rule added to `src/assets/styles.css`: `.hero-sectors .btn{width:100%;box-sizing:border-box}`. Buttons within each sector column stretch to fill the column width; the longer label sets the column width and the shorter button matches. Global `.btn` class unchanged. Responsive: on mobile single-column layout, buttons fill available width naturally.
+
+---
+
 *Document produced under PRISM Project Instructions v1.4. Stage 3 delivery by AI CustomWorks Ltd for EIS Consulting Ltd.*
