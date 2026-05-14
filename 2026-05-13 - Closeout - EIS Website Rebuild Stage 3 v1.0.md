@@ -132,4 +132,31 @@ Tag pushed to origin: `v0-pre-rebuild` → `118a090`
 
 ---
 
+## 7. Post-PR Fix — Azure Deployment Validation Failure
+
+**Date:** 2026-05-14
+**Commit:** see `fix(routing)` commit on `rebuild/v1`
+
+Initial Azure deployment failed validation because `staticwebapp.config.json` defined two redirect rules for `/general-practice/` and `/general-practice`. Azure Static Web Apps normalises these to the same internal route and treats them as a duplicate-rule error. Failure was caught at PR #1 deployment log line 40 before any live traffic was affected.
+
+**Fix:** Consolidated both rules to a single wildcard rule:
+
+```json
+{
+  "routes": [
+    {
+      "route": "/general-practice*",
+      "redirect": "/healthcare/",
+      "statusCode": 301
+    }
+  ]
+}
+```
+
+The wildcard `*` covers both `/general-practice` and `/general-practice/` in one rule per Azure Static Web Apps documented redirect syntax.
+
+**Brief note:** Brief §9.5 specified two separate rules (with and without trailing slash) as the example pattern. The working pattern for Azure is one wildcard rule. Brief v1.3 should update §9.5 to reflect the wildcard pattern for future engagements.
+
+---
+
 *Document produced under PRISM Project Instructions v1.4. Stage 3 delivery by AI CustomWorks Ltd for EIS Consulting Ltd.*
