@@ -159,4 +159,37 @@ The wildcard `*` covers both `/general-practice` and `/general-practice/` in one
 
 ---
 
+## 8. Stage 3 acceptance refinements
+
+**Date:** 2026-05-14
+**Commits:** `chore(nav):`, `feat(home):`, `feat(privacy):`, `docs:`
+**Triggered by:** Damo's acceptance review of the Azure PR preview.
+
+Four changes were made after PR open and initial Azure deployment, based on Damo's review of the deployed preview.
+
+**Refinement A — Nav order corrected (all 7 pages)**
+Navigation order changed from `Home | Healthcare | Legal | Accountancy | Contact` to `Home | Legal | Healthcare | Accountancy | Contact` on both the header nav and footer nav across all 7 pages. Legal and Healthcare positions were transposed. Rationale: Law is the live proposition; Healthcare and Accountancy are stubs in development. Priority order reflects the current state of delivery.
+
+**Refinement B — Home page hero restructured to sector columns**
+The single `.ctas` row of three buttons was replaced with a `.hero-sectors` grid of three labelled sector columns. Each column carries a `.kicker` sector label and stacked `.btn` elements. The LAW column has two buttons: (1) "Read the proposition first →" (`.btn`, href `/legal/`, event `hero_cta_law_proposition`) and (2) "Take the Avoidable Requisition Diagnostic →" (`.btn.primary`, ScoreApp URL, `target="_blank"`, event `hero_cta_law_diagnostic`). The HEALTHCARE and ACCOUNTANCY columns retain their single waitlist CTAs with unchanged event names. The `hero_cta_law_scorecard` event name was retired; replaced by `hero_cta_law_proposition` and `hero_cta_law_diagnostic`. New CSS utility class `.hero-sectors` added to `src/assets/styles.css`: 3-column grid on desktop (≥980px), single column on mobile (<980px), with `.hero-sectors .ctas{flex-direction:column;align-items:flex-start}` for vertical button stacking within each sector column.
+
+**Refinement C — Privacy Policy: third-party destinations section added**
+New §12 "Third-party destinations and form processing" inserted between the Clarity disclosure (§11) and "Changes to this policy" (renumbered §13). Discloses ScoreApp as an independent data controller for personal data submitted via the scorecard, and Microsoft Forms (Microsoft 365) as a data processor under the Microsoft Online Services Data Protection Addendum. "Last updated" date advanced from 13 May 2026 to 14 May 2026 (policy content materially changed).
+
+**Refinement D — Closeout note appended (this section)**
+This addendum records the four acceptance refinements in the project closeout document.
+
+---
+
+### Brief v1.3 candidate items
+
+The following items are candidates for brief v1.3 or a subsequent engagement template:
+
+1. **Nav order convention**: Legal before Healthcare (live proposition before development stubs) should be the default nav order pattern for multi-sector sites where sectors are at different stages of delivery.
+2. **Hero sector-grouping pattern**: Three labelled sector columns with stacked CTAs per sector (the `.hero-sectors` pattern) is the preferred layout for multi-sector landing pages over a flat CTA row.
+3. **Privacy policy template**: Template should include a "Third-party destinations and form processing" section as standard when ScoreApp and/or Microsoft Forms are in use.
+4. **Clarity event naming convention**: Retire `_scorecard` suffix for ScoreApp CTAs; use `_proposition` (internal proposition page link) and `_diagnostic` (ScoreApp link) as the standard split for sector hero CTAs with two law-sector actions.
+
+---
+
 *Document produced under PRISM Project Instructions v1.4. Stage 3 delivery by AI CustomWorks Ltd for EIS Consulting Ltd.*
