@@ -1,0 +1,9 @@
+{
+  "routes": [
+    {
+      "route": "/general-practice*",
+      "redirect": "/healthcare/",
+      "statusCode": 301
+    }
+  ]
+}
