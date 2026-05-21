@@ -283,6 +283,41 @@ Fix: added `tabindex="-1"` to every `<main id="main-content">` element across th
 This is a WCAG 2.4.1 Bypass Blocks (Level A) compliance fix. The defect did not exist in the original v1.2 brief; the implementation was incomplete on this criterion. §11.4 should be retested in this form (keyboard activation AND focus verification) in future acceptance walkthroughs.
 
 ---
+### 9.7 Post-launch housekeeping and infrastructure review (2026-05-21, continued)
+
+Immediately following production sign-off on 2026-05-21, a second session tackled backlog items §11.1 through §11.7. Four items were completed; three were deferred or elevated to decision status. Work summarised below.
+
+#### 9.7.1 SEO: Explicit canonical URLs added to all pages
+
+LinkedIn Post Inspector flagged a canonical URL mismatch: the site's `og:url` meta tags used apex `https://eisconsulting.co.uk/...` while the fetched URL was www. LinkedIn derives the canonical from `og:url` when no explicit `rel="canonical"` tag exists, causing the mismatch warning.
+
+**Fix:** Added explicit `<link rel="canonical">` tags to all seven pages, each pointing to the corresponding apex URL (e.g. `src/index.html` → `https://eisconsulting.co.uk/`, `src/legal/index.html` → `https://eisconsulting.co.uk/legal/`, etc). The canonical URL is now declared explicitly and consistently across all pages. LinkedIn Post Inspector re-run confirmed: canonical warning resolved, URL information now correct. Commit `1fc929b`.
+
+**Decision rationale (AD2):** apex URL chosen as canonical because it is the shorter form, cleaner for brand presentation in social cards, and both apex and www resolve to the same Azure SWA (apex via Azure DNS alias). The www URL works fine but is a secondary path.
+
+#### 9.7.2 Email authentication completed: DMARC record published
+
+Prior work had established SPF and DKIM signatures on outbound EIS mail (both published in Azure DNS post-migration; DKIM had been silently broken on Stackdns). DMARC was absent, leaving the email authentication trio incomplete.
+
+**Published:** `_dmarc.eisconsulting.co.uk` TXT record with value `v=DMARC1; p=none; rua=mailto:Damian.Neilson@eisconsulting.co.uk`.
+
+Policy is set to `p=none` (monitoring only, no enforcement action), allowing EIS to observe aggregate reports for 2 to 4 weeks before tightening to `p=quarantine` and eventually `p=reject`. Reports will be sent to `Damian.Neilson@eisconsulting.co.uk`. Verified live via three public DNS resolvers (Cloudflare, Google, Quad9). Completes email authentication layer.
+
+#### 9.7.3 Content review: Hero subject-line text accepted as-is
+
+The home page hero subject line reads "For owner-led firms in regulated sectors" (general). The healthcare page reads "For owner-principals in healthcare" (sector-specific). The accountancy page reads "For managing partners of UK accountancy practices" (role and sector-specific).
+
+A tone review was conducted post-launch to determine whether the healthcare eyebrow should be aligned to the legal/accountancy pattern (e.g., "For managing partners of UK GP practices"). Decision: no change. The deliberately loose scope of "healthcare" is intentional, encompassing both GP practices and private dental practices under a single positioning. The role term "owner-principals" is correct for the healthcare sector. This is a documented design decision, not an oversight. No change required.
+
+#### 9.7.4 One.com Enthusiast hosting plan cancelled
+
+Audit of One.com account revealed active subscription to Enthusiast hosting plan (web hosting + add-ons), costing £16.87/month (£202/year). EIS has used Azure SWA for hosting since the rebuild; One.com hosting is unused and provided no current value.
+
+**Cancelled:** Enthusiast hosting plan, effective 2026-10-21 (at next renewal, not immediately). Bundled add-ons (EAS, DNS Admin) will be cancelled automatically. `eisconsulting.co.uk` domain registration remains active as "Domain Only" (separate product, unaffected by hosting cancellation).
+
+**Caveat — mailbox audit required:** The One.com account hosts five mailboxes (`accounts@`, `contact@`, `damian.neilson@`, `darren.henderson@`, `info@eisconsulting.co.uk`), totalling ~680 MB of stored mail. The `damian.neilson@` mailbox contains 619 MB. These mailboxes will be deleted when the hosting plan expires on 2026-10-21 unless mail content is exported beforehand. An audit has been added to Backlog 11.9 with a deadline of 2026-09-30 (3 weeks ahead of deletion) to confirm whether these mailboxes are still in active use or can be safely archived. See Backlog 11.9 for full details.
+
+---
 
 ## 10. DKIM and Teams CNAME Recovery
 
