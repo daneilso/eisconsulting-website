@@ -272,6 +272,18 @@ The two CTAs (home hero, legal Prize section) now point at the branded URL per c
 
 ---
 
+### 9.6 Post-launch accessibility defect resolved
+
+Microsoft Clarity's automated insight panel flagged "Dead clicks on skip links" during the post-launch session audit. The §11.4 acceptance check (skip-link keyboard navigation) had passed because it only tested Tab + Enter activation; it did not test that focus actually moved to the main content after activation.
+
+Diagnosis: the `<main id="main-content">` element on all seven pages lacked `tabindex="-1"`. Without it, the browser cannot move keyboard focus to a non-interactive element. The skip link changed the URL hash and scrolled the page, but focus stayed on the skip link itself. The next Tab press returned the user to the nav, defeating the skip link's purpose.
+
+Fix: added `tabindex="-1"` to every `<main id="main-content">` element across the seven pages. Verified live: after activating the skip link, Tab advances focus into the main content rather than back to the nav. Commit `e09b89f`.
+
+This is a WCAG 2.4.1 Bypass Blocks (Level A) compliance fix. The defect did not exist in the original v1.2 brief; the implementation was incomplete on this criterion. §11.4 should be retested in this form (keyboard activation AND focus verification) in future acceptance walkthroughs.
+
+---
+
 ## 10. DKIM and Teams CNAME Recovery
 
 During the DNS migration audit, three CNAME records visible in the One.com Personal DNS panel were found to be missing from the authoritative Stackdns zone:
