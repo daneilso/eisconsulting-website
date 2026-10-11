@@ -6,21 +6,21 @@ Marketing website for **EIS Consulting Ltd**, live at **https://eisconsulting.co
 
 - **Plain static HTML + CSS.** No framework, no build step, no `package.json`.
 - The only JavaScript is the Microsoft Clarity analytics snippet in each page's `<head>`, plus inline `onclick` Clarity events on some CTAs.
-- 8 live hand-written pages, one `index.html` per folder:
+- 8 hand-written pages, one `index.html` per folder:
   - `src/index.html`: home, with a hero offering two pathway buttons (Legal AI Governance, Government Agile Delivery)
   - `src/legal/`: Legal AI Governance, home of the From Policy to Practice offer
   - `src/legal/avoidable-requisitions/`: the conveyancing service and home of the Avoidable Requisition Diagnostic. It is listed under Legal in the footer navigation only, because the header has no sub menu. The header highlights Legal on this page using `aria-current="true"`.
   - `src/government/`, `src/approach/` (the EIS Augmentation Method, assembled from the home page sections), `src/contact/`, `src/privacy-policy/`, `src/terms-of-use/`
-- `src/healthcare/` and `src/accountancy/` are retired. They remain in the repo but are unreachable on the live site because of the redirects below, and their header and footer are no longer maintained.
+- The old healthcare and accountancy pages were deleted in October 2026 and can be recovered from git history. Their URLs 301-redirect to `/` through the rules below.
 - One stylesheet, `src/assets/styles.css`, shared by every page.
 - `src/staticwebapp.config.json` holds three wildcard rules, each a 301 to `/`: `/general-practice*`, `/healthcare*` and `/accountancy*`. Azure SWA treats `/x` and `/x/` as the same route, so separate rules for each fail deployment validation. Use one wildcard rule per retired path.
-  - Redirects are applied by Azure only. `python -m http.server` ignores them. The local SWA emulator (`npx @azure/static-web-apps-cli start src --swa-config-location src`) loads the file but only matches the bare path for a trailing `*`, so it redirects `/healthcare` yet still serves `/healthcare/`. That is an emulator limit, as the older `/general-practice*` rule behaves the same way. Confirm redirects on the PR preview site, for example `curl -I https://<preview-host>/healthcare/`.
+  - Redirects are applied by Azure only. `python -m http.server` ignores them. The local SWA emulator (`npx @azure/static-web-apps-cli start src --swa-config-location src`) loads the file but only matches the bare path for a trailing `*`, so it redirects `/healthcare` but not `/healthcare/`. That is an emulator limit, as the older `/general-practice*` rule behaves the same way. Confirm redirects on the PR preview site, for example `curl -I https://<preview-host>/healthcare/`.
 - Assets are in `src/assets/` (logos, favicons, `og.png`). There are also copies of `og.png` and `favicon.png` in `src/` itself, which the social tags and the root favicon link point to.
 
 ### Conventions and house style
 
 - **Every link and asset path is root-absolute** (`/assets/styles.css`, `/legal/`), so `src/` is the web root. To preview locally, serve it as root, for example `npx serve src` or `python -m http.server -d src`.
-- The header, nav, footer and Clarity snippet are **duplicated in all 8 live pages**, because there are no templates. A change to any of them must be made in every file.
+- The header, nav, footer and Clarity snippet are **duplicated in all 8 pages**, because there are no templates. A change to any of them must be made in every file.
 - Every page has its own `<head>` with:
   - title, description and favicons
   - a `rel="canonical"` link to the **apex** URL (`https://eisconsulting.co.uk/<page>/`), which is the canonical form; `www` is secondary
@@ -45,7 +45,7 @@ The privacy policy discloses Clarity, so update it if analytics or third parties
 
 ### External services embedded or linked
 
-- **Microsoft Forms** (`forms.cloud.microsoft`): the contact form is planned as an iframe embed on `contact/`, hidden until the form exists (see the comment in that file). The old waitlist embeds survive only in the retired `healthcare/` and `accountancy/` files. Responses go to the M365 tenant. Embedding them causes a harmless service-worker console warning.
+- **Microsoft Forms** (`forms.cloud.microsoft`): the contact form is planned as an iframe embed on `contact/`, hidden until the form exists (see the comment in that file). The old waitlist embeds on the healthcare and accountancy pages were removed with those pages and survive only in git history. Responses go to the M365 tenant. Embedding them causes a harmless service-worker console warning.
 - **ScoreApp** at `https://diagnostic.eisconsulting.co.uk`: the diagnostic scorecard, linked from the hero and closing CTAs of `legal/avoidable-requisitions/`.
 
 ## Deployment (CI/CD)
@@ -100,5 +100,4 @@ The privacy policy discloses Clarity, so update it if analytics or third parties
 - **Approach page** reuses the home page principles and steps. A longer treatment is still to be written.
 - **Privacy policy** still mentions waitlists (sections 2, 3 and 4). Review it and update its "Last updated" date.
 - **`og.png`** still reads "AI Compliance for UK Regulated Businesses" and does not mention government. Replace it, and bump the `?v=` query on the social tags.
-- **Retired pages:** `src/healthcare/` and `src/accountancy/` are unreachable and can be deleted.
 - **Mobile footer:** the footer brand block clips at the right edge on phones. This predates the rebuild and needs a CSS fix.
