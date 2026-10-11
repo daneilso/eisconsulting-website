@@ -66,7 +66,7 @@ The privacy policy discloses Clarity, so update it if analytics or third parties
 - **DNS:** Azure DNS zone `eisconsulting.co.uk`.
   - Location: EIS tenant, resource group `eis-dns`, UK South
   - Nameservers: `ns*-07.azure-dns.*`
-  - The domain is registered at One.com, which now provides the domain only.
+  - The domain is registered at One.com. The One.com hosting subscription was renewed on 2026-10-11, mainly to keep its five legacy mailboxes. The website itself is not hosted there.
 - **DNS records:**
   - Apex: an alias A record pointing to the SWA resource
   - `www`: CNAME to the SWA default hostname
@@ -78,7 +78,7 @@ The privacy policy discloses Clarity, so update it if analytics or third parties
 
 ## Open items (from Closeout v1.1, as of 2026-10-11)
 
-- **Overdue: One.com mailbox audit** (Backlog 11.9, due 2026-09-30). The One.com hosting plan expires on **2026-10-21**, and its five mailboxes (~680 MB) will be deleted then unless exported.
+- **One.com mailboxes: resolved, data safe.** The subscription was renewed on 2026-10-11, before the 2026-10-21 expiry, so the five mailboxes (~680 MB) are kept and no longer at risk. Before the next renewal, decide whether they're still needed or should be migrated to M365 (Backlog 11.9, no longer urgent).
 - Tighten DMARC from `p=none` to `quarantine`, then `reject`, after reviewing the aggregate reports.
 - Production SWA is in a subscription named "Sandpit" (governance review, Backlog 11.5).
 - Investigate the elevated-access user warning in the AICW tenant IAM (Backlog 11.1).
