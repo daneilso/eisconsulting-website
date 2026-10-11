@@ -317,6 +317,8 @@ Audit of One.com account revealed active subscription to Enthusiast hosting plan
 
 **Caveat — mailbox audit required:** The One.com account hosts five mailboxes (`accounts@`, `contact@`, `damian.neilson@`, `darren.henderson@`, `info@eisconsulting.co.uk`), totalling ~680 MB of stored mail. The `damian.neilson@` mailbox contains 619 MB. These mailboxes will be deleted when the hosting plan expires on 2026-10-21 unless mail content is exported beforehand. An audit has been added to Backlog 11.9 with a deadline of 2026-09-30 (3 weeks ahead of deletion) to confirm whether these mailboxes are still in active use or can be safely archived. See Backlog 11.9 for full details.
 
+**Update 2026-10-11 — subscription renewed, cancellation superseded:** Damo renewed the One.com subscription ahead of the 2026-10-21 expiry. The cancellation above no longer applies: the hosting plan stays active, and the five mailboxes and their ~680 MB of stored mail are retained and no longer at risk of deletion. The deletion deadline that drove the Backlog 11.9 mailbox audit has gone. Whether these mailboxes are still in active use can be reviewed without time pressure before the next renewal.
+
 ---
 
 ## 10. DKIM and Teams CNAME Recovery
